@@ -9,21 +9,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Lany on 2016/12/18.
+ * 类生产器
  */
-public class ClassCreateHelper {
-    static final int MODEL = 0;
-    static final int VIEW = 2;
-    static final int PRESENTER = 1;
-    static final int CONTRACT = 0;
+public class ClassGenerator {
 
     public static void createInterface(String path, String className, String classFullName, int mode) throws IOException {
         String type = null;
-        if (mode == MODEL) {
+        if (mode == Constants.MODEL) {
             type = "Model";
-        } else if (mode == PRESENTER) {
+        } else if (mode == Constants.PRESENTER) {
             type = "Presenter";
-        } else if (mode == VIEW) {
+        } else if (mode == Constants.VIEW) {
             type = "View";
         }
         String dir = path + type.toLowerCase() + "/";
@@ -74,9 +70,9 @@ public class ClassCreateHelper {
      */
     public static void createImplClass(String path, String className, String classFullName, int mode, int tag) throws IOException {
         String type = null;
-        if (mode == MODEL) {
+        if (mode == Constants.MODEL) {
             type = "Model";
-        } else if (mode == PRESENTER) {
+        } else if (mode == Constants.PRESENTER) {
             type = "Presenter";
         }
         //开始创建实现文件
@@ -97,7 +93,7 @@ public class ClassCreateHelper {
         writer.write("package " + packageName + type.toLowerCase() + ";");
 
         writer.newLine();
-        if (tag == CONTRACT) {
+        if (tag == Constants.CONTRACT) {
             writer.write("import " + packageName + "contract." + classFullName + ";");
         }
         writer.newLine();
@@ -108,10 +104,10 @@ public class ClassCreateHelper {
 
         writer.newLine();
         writer.newLine();
-        if (tag == CONTRACT) {
+        if (tag == Constants.CONTRACT) {
             writer.write("public class " + className + type + "Impl implements " +
                     classFullName + "." + type + "{");
-        } else if (tag == PRESENTER) {
+        } else if (tag == Constants.PRESENTER) {
 
             writer.write("public class " + className + type + "Impl implements " +
                     className + type + "{");

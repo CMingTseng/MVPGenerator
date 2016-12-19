@@ -47,6 +47,11 @@ public class GeneratorAction extends AnAction {
 
     }
 
+    private void init(AnActionEvent e) {
+        _editor = e.getData(PlatformDataKeys.EDITOR);
+        _classModel = new ClassModel();
+    }
+
     private void refreshProject(AnActionEvent e) {
         e.getProject().getBaseDir().refresh(false, true);
     }
@@ -71,18 +76,18 @@ public class GeneratorAction extends AnAction {
         String className = _classModel.get_className();
         String classFullName = _classModel.get_classFullName();
         System.out.println("_path presenter:" + _path);
-        ClassCreateHelper.createImplClass(_path
+        ClassGenerator.createImplClass(_path
                 , className
-                , classFullName, ClassCreateHelper.MODEL
-                , ClassCreateHelper.PRESENTER);
-        ClassCreateHelper.createImplClass(
+                , classFullName, Constants.MODEL
+                , Constants.PRESENTER);
+        ClassGenerator.createImplClass(
                 _path, className
-                , classFullName, ClassCreateHelper.PRESENTER
-                , ClassCreateHelper.PRESENTER);
-        ClassCreateHelper.createInterface(_path, className, classFullName, ClassCreateHelper.MODEL);
+                , classFullName, Constants.PRESENTER
+                , Constants.PRESENTER);
+        ClassGenerator.createInterface(_path, className, classFullName, Constants.MODEL);
 
 
-        ClassCreateHelper.createInterface(_path, className, classFullName, ClassCreateHelper.VIEW);
+        ClassGenerator.createInterface(_path, className, classFullName, Constants.VIEW);
     }
 
     /**
@@ -97,17 +102,17 @@ public class GeneratorAction extends AnAction {
 
 
         // create presenter file
-        ClassCreateHelper.createImplClass(_path
+        ClassGenerator.createImplClass(_path
                 , className
-                , classFullName, ClassCreateHelper.MODEL
-                , ClassCreateHelper.CONTRACT);
+                , classFullName, Constants.MODEL
+                , Constants.CONTRACT);
 
 
         // create presenter file
-        ClassCreateHelper.createImplClass(
+        ClassGenerator.createImplClass(
                 _path, className
-                , classFullName, ClassCreateHelper.PRESENTER
-                , ClassCreateHelper.CONTRACT);
+                , classFullName, Constants.PRESENTER
+                , Constants.CONTRACT);
     }
 
 
@@ -120,7 +125,7 @@ public class GeneratorAction extends AnAction {
             return;
         }
 
-        _path = ClassCreateHelper.getCurrentPath(_event, _classModel.get_classFullName());
+        _path = ClassGenerator.getCurrentPath(_event, _classModel.get_classFullName());
         if (_path.contains("contract")) {
             System.out.println("_path replace contract " + _path);
             _path = _path.replace("contract/", "");
@@ -131,9 +136,9 @@ public class GeneratorAction extends AnAction {
 
         } else {
             if (mode == MODE_CONTRACT) {
-                MessagesCenter.showErrorMessage("Your Contract should in package 'contract'.", "error");
+                MsgDialog.showErrorMsg("Your Contract should in package 'contract'.");
             } else if (mode == MODE_PRESENTER) {
-                MessagesCenter.showErrorMessage("Your Presenter should in package 'presenter'.", "error");
+                MsgDialog.showErrorMsg("Your Presenter should in package 'presenter'.");
             }
             canCreate = false;
         }
@@ -154,7 +159,7 @@ public class GeneratorAction extends AnAction {
 
         int lastIndex = _content.lastIndexOf("}");
         _content = _content.substring(0, lastIndex);
-        MessagesCenter.showDebugMessage(_content, "debug");
+        MsgDialog.showDebugMsg(_content, "debug");
         final String content = setContractContent();
         //wirte in runWriteAction
         WriteCommandAction.runWriteCommandAction(_editor.getProject(),
@@ -188,7 +193,7 @@ public class GeneratorAction extends AnAction {
                 String className = word.substring(0, word.indexOf("Contract"));
                 _classModel.set_className(className);
                 _classModel.set_classFullName(word);
-                MessagesCenter.showDebugMessage(className, "class name");
+                MsgDialog.showDebugMsg(className, "class name");
                 mode = MODE_CONTRACT;
             } else if (word.contains("Presenter")) {
 
@@ -197,18 +202,13 @@ public class GeneratorAction extends AnAction {
                 _classModel.set_className(className);
                 _classModel.set_classFullName(word);
                 mode = MODE_PRESENTER;
-                MessagesCenter.showDebugMessage(className, "class name");
+                MsgDialog.showDebugMsg(className, "class name");
             }
         }
         if (null == _classModel.get_className()) {
-            MessagesCenter.showErrorMessage("Create failed ,Can't found 'Contract' or 'Presenter' in your class name,your class name must contain 'Contract' or 'Presenter'", "error");
+            MsgDialog.showErrorMsg("Create failed ,Can't found 'Contract' or 'Presenter' in your class name,your class name must contain 'Contract' or 'Presenter'");
             canCreate = false;
         }
-    }
-
-    private void init(AnActionEvent e) {
-        _editor = e.getData(PlatformDataKeys.EDITOR);
-        _classModel = new ClassModel();
     }
 
 
