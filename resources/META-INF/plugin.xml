@@ -23,7 +23,7 @@
     <actions>
         <!-- Add your actions here -->
 
-        <action id="Generator" class="com.lany.plugin.GeneratorAction" text="MVPGenerator"
+        <action id="Generator" class="com.lany.plugin.action.GenerateAction" text="MVPGenerator"
                 description="android mvp generator">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta 1"/>

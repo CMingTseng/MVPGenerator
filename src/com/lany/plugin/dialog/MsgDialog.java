@@ -1,4 +1,4 @@
-package com.lany.plugin;
+package com.lany.plugin.dialog;
 
 import com.intellij.openapi.ui.Messages;
 

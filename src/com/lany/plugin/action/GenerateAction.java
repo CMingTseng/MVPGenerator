@@ -1,4 +1,4 @@
-package com.lany.plugin;
+package com.lany.plugin.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -7,13 +7,17 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiJavaFile;
+import com.lany.plugin.ClassGenerator;
+import com.lany.plugin.ClassModel;
+import com.lany.plugin.Constants;
+import com.lany.plugin.dialog.MsgDialog;
 
 import java.io.IOException;
 
 /**
  * Created by Lany on 2016/12/18.
  */
-public class GeneratorAction extends AnAction {
+public class GenerateAction extends AnAction {
     private ClassModel _classModel;
     private Editor _editor;
     private String _content;
