@@ -88,6 +88,8 @@ public class ClassGenerator {
         BufferedWriter writer = new BufferedWriter(w);
         writer.write("package " + packageName + "impl;");
         writer.newLine();
+        writer.newLine();
+        writer.newLine();
         if (tag == Constants.CONTRACT) {
             writer.write("import " + packageName + "contract." + classFullName + ";");
         }
@@ -95,8 +97,6 @@ public class ClassGenerator {
         writer.newLine();
         writer.newLine();
         writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(new Date()) + "\n*/");
-        writer.newLine();
-        writer.newLine();
         if (tag == Constants.CONTRACT) {
             writer.write("public class " + className + type + "Impl implements " +
                     classFullName + "." + type + "{");
