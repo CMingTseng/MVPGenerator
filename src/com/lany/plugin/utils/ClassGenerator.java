@@ -1,8 +1,9 @@
-package com.lany.plugin;
+package com.lany.plugin.utils;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.lany.plugin.Constants;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

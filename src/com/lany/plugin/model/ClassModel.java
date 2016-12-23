@@ -1,4 +1,4 @@
-package com.lany.plugin;
+package com.lany.plugin.model;
 
 /**
  * Created by Lany on 2016/12/18.
