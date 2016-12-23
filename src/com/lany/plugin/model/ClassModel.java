@@ -1,25 +1,23 @@
 package com.lany.plugin.model;
 
-/**
- * Created by Lany on 2016/12/18.
- */
+
 public class ClassModel {
-    private String _className;
-    private String _classFullName;
+    private String className;
+    private String classFullName;
 
-    public String get_classFullName() {
-        return _classFullName;
+    public String getClassName() {
+        return className;
     }
 
-    public void set_classFullName(String _classFullName) {
-        this._classFullName = _classFullName;
+    public void setClassName(String className) {
+        this.className = className;
     }
 
-    public String get_className() {
-        return _className;
+    public String getClassFullName() {
+        return classFullName;
     }
 
-    public void set_className(String _className) {
-        this._className = _className;
+    public void setClassFullName(String classFullName) {
+        this.classFullName = classFullName;
     }
 }

@@ -62,21 +62,21 @@ public class GenerateAction extends AnAction {
         for (String word : words) {
             if (word.contains("Contract")) {
                 String className = word.substring(0, word.indexOf("Contract"));
-                mClassModel.set_className(className);
-                mClassModel.set_classFullName(word);
+                mClassModel.setClassName(className);
+                mClassModel.setClassFullName(word);
                 System.out.println("类名:" + className);
                 System.out.println("类全名:" + word);
                 mode = MODE_CONTRACT;
             } else if (word.contains("Presenter")) {
                 String className = word.substring(0, word.indexOf("Presenter"));
-                mClassModel.set_className(className);
-                mClassModel.set_classFullName(word);
+                mClassModel.setClassName(className);
+                mClassModel.setClassFullName(word);
                 mode = MODE_PRESENTER;
                 System.out.println("类名:" + className);
                 System.out.println("类全名:" + word);
             }
         }
-        if (null == mClassModel.get_className()) {
+        if (null == mClassModel.getClassName()) {
             Messages.showMessageDialog("Create failed ,Can't found 'Contract' or 'Presenter' in your class name,your class name must contain 'Contract' or 'Presenter'", "Error", Messages.getErrorIcon());
             canCreate = false;
         }
@@ -101,21 +101,16 @@ public class GenerateAction extends AnAction {
     }
 
     private void createClassWithPresenter() throws IOException {
-        String className = mClassModel.get_className();
-        String classFullName = mClassModel.get_classFullName();
+        String className = mClassModel.getClassName();
+        String classFullName = mClassModel.getClassFullName();
         System.out.println("_path presenter:" + _path);
-        ClassGenerator.createImplClass(_path
-                , className
-                , classFullName, Constants.MODEL
-                , Constants.PRESENTER);
-        ClassGenerator.createImplClass(
-                _path, className
-                , classFullName, Constants.PRESENTER
-                , Constants.PRESENTER);
-        ClassGenerator.createInterface(_path, className, classFullName, Constants.MODEL);
+        System.out.println("类名:" + className);
+        System.out.println("类全名:" + classFullName);
 
-
-        ClassGenerator.createInterface(_path, className, classFullName, Constants.VIEW);
+        ClassGenerator.createImplClass(_path, className, classFullName, Constants.MODEL, Constants.PRESENTER);
+        ClassGenerator.createImplClass(_path, className, classFullName, Constants.PRESENTER, Constants.PRESENTER);
+        ClassGenerator.createInterface(_path, className, Constants.MODEL);
+        ClassGenerator.createInterface(_path, className, Constants.VIEW);
     }
 
     /**
@@ -124,8 +119,8 @@ public class GenerateAction extends AnAction {
      * @throws IOException
      */
     private void createFileWithContract() throws IOException {
-        String className = mClassModel.get_className();
-        String classFullName = mClassModel.get_classFullName();
+        String className = mClassModel.getClassName();
+        String classFullName = mClassModel.getClassFullName();
         System.out.println("_path:" + _path);
 
 
@@ -149,11 +144,11 @@ public class GenerateAction extends AnAction {
      * create Contract Model Presenter
      */
     private void createFiles() {
-        if (null == mClassModel.get_className()) {
+        if (null == mClassModel.getClassName()) {
             return;
         }
 
-        _path = ClassGenerator.getCurrentPath(mAnActionEvent, mClassModel.get_classFullName());
+        _path = ClassGenerator.getCurrentPath(mAnActionEvent, mClassModel.getClassFullName());
         if (_path.contains("contract")) {
             System.out.println("_path replace contract " + _path);
             _path = _path.replace("contract/", "");
@@ -198,7 +193,7 @@ public class GenerateAction extends AnAction {
     }
 
     private String setContractContent() {
-        String className = mClassModel.get_className();
+        String className = mClassModel.getClassName();
         String content = mContent + "public interface " + "View{\n}\n\n"
                 + "public interface " + "Presenter{\n}\n\n"
                 + "public interface " + "Model{\n}\n\n"

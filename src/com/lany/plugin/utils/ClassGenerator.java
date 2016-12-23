@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class ClassGenerator {
 
-    public static void createInterface(String path, String className, String classFullName, int mode) throws IOException {
+    public static void createInterface(String path, String className, int mode) throws IOException {
         String type = null;
         if (mode == Constants.MODEL) {
             type = "Model";
@@ -24,30 +24,24 @@ public class ClassGenerator {
             type = "View";
         }
         String dir = path + type.toLowerCase() + "/";
-
         path = dir + className + type + ".java";
-
         File dirs = new File(dir);
-
         System.out.println("dirs = " + dir);
         File file = new File(path);
         if (!dirs.exists()) {
             dirs.mkdir();
         }
         file.createNewFile();
-
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         BufferedWriter writer = new BufferedWriter(w);
-
         String packageName = getPackageName(path);
+
         writer.write("package " + packageName + type.toLowerCase() + ";");
         writer.newLine();
         writer.newLine();
-        ;
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(date) + "\n*/");
-
         writer.newLine();
         writer.newLine();
         writer.write("public interface " + className + type + "{");
@@ -87,22 +81,20 @@ public class ClassGenerator {
             dirs.mkdirs();
         }
         file.createNewFile();
+
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
         Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         BufferedWriter writer = new BufferedWriter(w);
-
-
         writer.write("package " + packageName + type.toLowerCase() + ";");
-
         writer.newLine();
         if (tag == Constants.CONTRACT) {
             writer.write("import " + packageName + "contract." + classFullName + ";");
         }
         writer.newLine();
         writer.newLine();
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(date) + "\n*/");
-
         writer.newLine();
         writer.newLine();
         if (tag == Constants.CONTRACT) {
@@ -114,7 +106,6 @@ public class ClassGenerator {
                     className + type + "{");
         }
         writer.newLine();
-
         writer.newLine();
         writer.write("}");
         writer.flush();
@@ -138,7 +129,6 @@ public class ClassGenerator {
                 index = i;
                 break;
             }
-
         }
         for (int j = index; j < length - 2; j++) {
             packageName.append(strings[j] + ".");
@@ -147,12 +137,8 @@ public class ClassGenerator {
     }
 
     public static String getCurrentPath(AnActionEvent e, String classFullName) {
-
         VirtualFile currentFile = DataKeys.VIRTUAL_FILE.getData(e.getDataContext());
-
         String path = currentFile.getPath().replace(classFullName + ".java", "");
         return path;
     }
-
-
 }
