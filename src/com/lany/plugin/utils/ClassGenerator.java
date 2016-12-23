@@ -13,6 +13,7 @@ import java.util.Date;
  * 类生产器
  */
 public class ClassGenerator {
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
     public static void createInterface(String path, String className, int mode) throws IOException {
         String type = null;
@@ -32,8 +33,6 @@ public class ClassGenerator {
             dirs.mkdir();
         }
         file.createNewFile();
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         BufferedWriter writer = new BufferedWriter(w);
         String packageName = getPackageName(path);
@@ -41,7 +40,7 @@ public class ClassGenerator {
         writer.write("package " + packageName + type.toLowerCase() + ";");
         writer.newLine();
         writer.newLine();
-        writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(date) + "\n*/");
+        writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(new Date()) + "\n*/");
         writer.newLine();
         writer.newLine();
         writer.write("public interface " + className + type + "{");
@@ -85,10 +84,6 @@ public class ClassGenerator {
             dirs.mkdirs();
         }
         file.createNewFile();
-
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-
         Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         BufferedWriter writer = new BufferedWriter(w);
         writer.write("package " + packageName + "impl;");
@@ -99,7 +94,7 @@ public class ClassGenerator {
         writer.write("import " + packageName + interfaceName + ";");
         writer.newLine();
         writer.newLine();
-        writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(date) + "\n*/");
+        writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(new Date()) + "\n*/");
         writer.newLine();
         writer.newLine();
         if (tag == Constants.CONTRACT) {
