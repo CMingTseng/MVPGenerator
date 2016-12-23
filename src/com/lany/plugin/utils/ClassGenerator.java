@@ -71,12 +71,12 @@ public class ClassGenerator {
             type = "Presenter";
         }
         //开始创建实现文件
-        String dir = path + type.toLowerCase() + "/";
+        String dir = path + type.toLowerCase() + "/impl/";
         path = dir + className + type + "Impl.java";
         File dirs = new File(dir);
         File file = new File(path);
         String packageName = getPackageName(path);
-        System.out.println(packageName);
+        System.out.println(packageName + "   path:" + path);
         if (!dirs.exists()) {
             dirs.mkdirs();
         }
@@ -87,11 +87,12 @@ public class ClassGenerator {
 
         Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         BufferedWriter writer = new BufferedWriter(w);
-        writer.write("package " + packageName + type.toLowerCase() + ";");
+        writer.write("package " + packageName + "impl;");
         writer.newLine();
         if (tag == Constants.CONTRACT) {
             writer.write("import " + packageName + "contract." + classFullName + ";");
         }
+        writer.write("import " + packageName + className + type + ";");
         writer.newLine();
         writer.newLine();
         writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(date) + "\n*/");
