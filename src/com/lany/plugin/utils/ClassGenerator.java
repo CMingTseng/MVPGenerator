@@ -72,7 +72,11 @@ public class ClassGenerator {
         }
         //开始创建实现文件
         String dir = path + type.toLowerCase() + "/impl/";
-        path = dir + className + type + "Impl.java";
+
+        String interfaceName = className + type;
+        String implClassName = interfaceName + "Impl";
+
+        path = dir + implClassName + ".java";
         File dirs = new File(dir);
         File file = new File(path);
         String packageName = getPackageName(path);
@@ -92,7 +96,7 @@ public class ClassGenerator {
         if (tag == Constants.CONTRACT) {
             writer.write("import " + packageName + "contract." + classFullName + ";");
         }
-        writer.write("import " + packageName + className + type + ";");
+        writer.write("import " + packageName + interfaceName + ";");
         writer.newLine();
         writer.newLine();
         writer.write("/**\n* Created by " + System.getProperty("user.name") + " on " + sdf.format(date) + "\n*/");
