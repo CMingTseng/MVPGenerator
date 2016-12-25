@@ -49,27 +49,17 @@ public class FunctionDialog extends JDialog implements ItemListener {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                Document doc = e.getDocument();
-                try {
-                    String content = doc.getText(0, doc.getLength()); //返回文本框输入的内容
-                    modelImplEdit.setText(content + "ModelImpl");
-                    modelInterfaceEdit.setText(content + "Model");
-                    viewInterfaceEdit.setText(content + "View");
-                    presenterImplEdit.setText(content + "PresenterImpl");
-                    presenterInterfaceEdit.setText(content + "Presenter");
-                } catch (BadLocationException e1) {
-                    e1.printStackTrace();
-                }
+                autoInput(e.getDocument());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-
+                autoInput(e.getDocument());
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-
+                autoInput(e.getDocument());
             }
         });
 
@@ -124,6 +114,19 @@ public class FunctionDialog extends JDialog implements ItemListener {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
+    private void autoInput(Document doc){
+        try {
+            String content = doc.getText(0, doc.getLength()); //返回文本框输入的内容
+            modelImplEdit.setText(content + "ModelImpl");
+            modelInterfaceEdit.setText(content + "Model");
+            viewInterfaceEdit.setText(content + "View");
+            presenterImplEdit.setText(content + "PresenterImpl");
+            presenterInterfaceEdit.setText(content + "Presenter");
+        } catch (BadLocationException e1) {
+            e1.printStackTrace();
+        }
     }
 
     private void onOK() {
