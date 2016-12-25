@@ -6,8 +6,14 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.impl.file.PsiDirectoryFactory;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.lany.plugin.dialog.FunctionDialog;
 import com.lany.plugin.model.EditEntity;
 import com.lany.plugin.utils.ClassGenerator;
@@ -42,6 +48,14 @@ public class GenerateAction extends AnAction {
         System.out.println("当前文件类型:" + javaFile.getFileType());
         System.out.println("当前类父类名称:" + javaFile.getParent().getName());
         System.out.println("当前类内容:" + javaFile.getText());
+
+        Project project = event.getProject();
+        PsiDirectory moduleDir = PsiDirectoryFactory.getInstance(project).createDirectory(event.getData(PlatformDataKeys.VIRTUAL_FILE));
+        System.out.println("当前目录名称:" + moduleDir.getName());
+        GlobalSearchScope searchScope = GlobalSearchScope.allScope(project);
+        System.out.println("搜索范围:" + searchScope.getDisplayName());
+        PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
+        System.out.println("factory:" + factory.toString());
 
         FunctionDialog dialog = new FunctionDialog();
         dialog.setOnFunctionDialogListener(new FunctionDialog.OnFunctionDialogListener() {

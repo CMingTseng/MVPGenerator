@@ -182,18 +182,23 @@ public class FunctionDialog extends JDialog implements ItemListener {
         if (source == createPresenterClassCheckBox) {
             editEntity.setCreatePresenterInterface(isSelected);
             System.out.println("createPresenterClassCheckBox:" + isSelected);
+            presenterInterfaceEdit.setVisible(isSelected);
         } else if (source == createPresenterImplClassCheckBox) {
             editEntity.setCreatePresenterImpl(isSelected);
             System.out.println("createPresenterImplClassCheckBox:" + isSelected);
+            presenterImplEdit.setVisible(isSelected);
         } else if (source == createViewInterfaceCheckBox) {
             editEntity.setCreateViewInterface(isSelected);
             System.out.println("createViewInterfaceCheckBox:" + isSelected);
+            viewInterfaceEdit.setVisible(isSelected);
         } else if (source == createModelClassCheckBox) {
             editEntity.setCreateModelInterface(isSelected);
             System.out.println("createModelClassCheckBox:" + isSelected);
+            modelInterfaceEdit.setVisible(isSelected);
         } else if (source == createModelImplClassCheckBox) {
             editEntity.setCreateModelImpl(isSelected);
             System.out.println("createModelImplClassCheckBox:" + isSelected);
+            modelImplEdit.setVisible(isSelected);
         }
 
     }
