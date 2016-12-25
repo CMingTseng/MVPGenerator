@@ -45,13 +45,13 @@ public class FunctionDialog extends JDialog implements ItemListener {
         Document doc = inputEdit.getDocument();
 
         //添加DocumentListener监听器
-        doc.addDocumentListener(new DocumentListener(){
+        doc.addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
                 Document doc = e.getDocument();
                 try {
-                    String content= doc.getText(0, doc.getLength()); //返回文本框输入的内容
+                    String content = doc.getText(0, doc.getLength()); //返回文本框输入的内容
                     modelImplEdit.setText(content + "ModelImpl");
                     modelInterfaceEdit.setText(content + "Model");
                     viewInterfaceEdit.setText(content + "View");
@@ -78,7 +78,7 @@ public class FunctionDialog extends JDialog implements ItemListener {
             public void inputMethodTextChanged(InputMethodEvent event) {
                 String inputContent = event.getText().toString().trim();
                 if (!inputContent.equals("")) {
-                    editEntity.setName(inputContent);
+
                     errorHintLabel.setText("");
                 } else {
                     errorHintLabel.setText("content is empty");
@@ -130,7 +130,23 @@ public class FunctionDialog extends JDialog implements ItemListener {
         String name = inputEdit.getText().toString().trim();
         System.out.println("name:" + name);
         if (!name.equals("")) {
+            String modelImplName = modelImplEdit.getText().toString().trim();
+            editEntity.setModelImplName(modelImplName);
 
+            String modelInterfaceName = modelInterfaceEdit.getText().toString().trim();
+            editEntity.setModelInterfaceName(modelInterfaceName);
+
+            String viewInterfaceName = viewInterfaceEdit.getText().toString().trim();
+            editEntity.setViewInterfaceName(viewInterfaceName);
+
+            String presenterImplName = presenterImplEdit.getText().toString().trim();
+            editEntity.setPresenterImplName(presenterImplName);
+
+            String presenterInterfaceName = presenterInterfaceEdit.getText().toString().trim();
+            editEntity.setPresenterInterfaceName(presenterInterfaceName);
+
+            editEntity.setName(name);
+            System.out.println("editEntity:" + editEntity.toString());
             if (null != mListener) {
                 mListener.onCreateBtnClicked(editEntity);
             }

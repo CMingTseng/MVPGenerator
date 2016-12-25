@@ -102,4 +102,21 @@ public class EditEntity {
     public void setCreateModelImpl(boolean createModelImpl) {
         this.createModelImpl = createModelImpl;
     }
+
+    @Override
+    public String toString() {
+        return "EditEntity{" +
+                "name='" + name + '\'' +
+                ", viewInterfaceName='" + viewInterfaceName + '\'' +
+                ", presenterInterfaceName='" + presenterInterfaceName + '\'' +
+                ", presenterImplName='" + presenterImplName + '\'' +
+                ", modelInterfaceName='" + modelInterfaceName + '\'' +
+                ", modelImplName='" + modelImplName + '\'' +
+                ", createViewInterface=" + createViewInterface +
+                ", createPresenterInterface=" + createPresenterInterface +
+                ", createPresenterImpl=" + createPresenterImpl +
+                ", createModelInterface=" + createModelInterface +
+                ", createModelImpl=" + createModelImpl +
+                '}';
+    }
 }
