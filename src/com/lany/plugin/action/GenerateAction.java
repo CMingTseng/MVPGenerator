@@ -8,6 +8,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiJavaFile;
+import com.lany.plugin.dialog.FunctionDialog;
 import com.lany.plugin.utils.ClassGenerator;
 import com.lany.plugin.model.ClassModel;
 import com.lany.plugin.Constants;
@@ -40,6 +41,21 @@ public class GenerateAction extends AnAction {
         System.out.println("当前文件类型:" + javaFile.getFileType());
         System.out.println("当前类父类名称:" + javaFile.getParent().getName());
         System.out.println("当前类内容:" + javaFile.getText());
+
+//        FunctionDialog dialog = new FunctionDialog();
+//        dialog.setOnFunctionDialogListener(new FunctionDialog.OnFunctionDialogListener() {
+//            @Override
+//            public void onCreateBtnClicked() {
+//                Messages.showMessageDialog("点击了创建", "提示", Messages.getInformationIcon());
+//            }
+//
+//            @Override
+//            public void onCancelBtnClicked() {
+//                Messages.showMessageDialog("点击取消", "提示", Messages.getInformationIcon());
+//            }
+//        });
+//        dialog.pack();
+//        dialog.setVisible(true);
 
         getClassModel();
         createFiles();

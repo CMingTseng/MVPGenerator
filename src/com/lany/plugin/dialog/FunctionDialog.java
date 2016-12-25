@@ -17,6 +17,8 @@ public class FunctionDialog extends JDialog implements ItemListener {
     private JCheckBox createModelImplClassCheckBox;
     private JLabel errorHintLabel;
 
+    private OnFunctionDialogListener mListener;
+
     public FunctionDialog() {
         setContentPane(contentPane);
         setModal(true);
@@ -81,6 +83,9 @@ public class FunctionDialog extends JDialog implements ItemListener {
         System.out.println("name:" + name);
         if (!name.equals("")) {
 
+            if (null != mListener) {
+                mListener.onCreateBtnClicked();
+            }
 
             dispose();
         } else {
@@ -89,8 +94,10 @@ public class FunctionDialog extends JDialog implements ItemListener {
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
+        if (null != mListener) {
+            mListener.onCancelBtnClicked();
+        }
     }
 
     public static void main(String[] args) {
@@ -136,5 +143,15 @@ public class FunctionDialog extends JDialog implements ItemListener {
             }
         }
 
+    }
+
+    public interface OnFunctionDialogListener {
+        void onCreateBtnClicked();
+
+        void onCancelBtnClicked();
+    }
+
+    public void setOnFunctionDialogListener(OnFunctionDialogListener listener) {
+        this.mListener = listener;
     }
 }

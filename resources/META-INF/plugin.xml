@@ -15,7 +15,7 @@
         Contract or
         Presenter class. see the https://github.com/lany192/MVPGenerator
     </description>
-
+    <depends>com.intellij.modules.lang</depends>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
     </extensions>
