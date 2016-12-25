@@ -1,100 +1,105 @@
 package com.lany.plugin.model;
 
-import com.intellij.psi.PsiDirectory;
-
-import java.util.List;
-
-
 public class EditEntity {
-    private String contractName;
-    private String viewParent;
-    private String presenterParent;
-    private String modelParent;
-    private List<String> view;
-    private List<String> presenter;
-    private List<String> model;
-    private PsiDirectory viewDir;
-    private String viewName;
+    private String name;
+    private String viewInterfaceName;
+    private String presenterInterfaceName;
+    private String presenterImplName;
 
-    public EditEntity(String contractName) {
-        this.contractName = contractName;
+    private String modelInterfaceName;
+    private String modelImplName;
+
+    private boolean createViewInterface = true;
+    private boolean createPresenterInterface = true;
+    private boolean createPresenterImpl = true;
+    private boolean createModelInterface = true;
+    private boolean createModelImpl = true;
+
+    public String getName() {
+        return name;
     }
 
-    public EditEntity(List<String> view, List<String> presenter, List<String> model) {
-        this.view = view;
-        this.presenter = presenter;
-        this.model = model;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getViewName() {
-        return viewName;
+    public String getViewInterfaceName() {
+        return viewInterfaceName;
     }
 
-    public void setViewName(String viewName) {
-        this.viewName = viewName;
+    public void setViewInterfaceName(String viewInterfaceName) {
+        this.viewInterfaceName = viewInterfaceName;
     }
 
-    public PsiDirectory getViewDir() {
-        return viewDir;
+    public String getPresenterInterfaceName() {
+        return presenterInterfaceName;
     }
 
-    public void setViewDir(PsiDirectory viewDir) {
-        this.viewDir = viewDir;
+    public void setPresenterInterfaceName(String presenterInterfaceName) {
+        this.presenterInterfaceName = presenterInterfaceName;
     }
 
-    public String getContractName() {
-        return contractName;
+    public String getPresenterImplName() {
+        return presenterImplName;
     }
 
-    public void setContractName(String contractName) {
-        this.contractName = contractName;
+    public void setPresenterImplName(String presenterImplName) {
+        this.presenterImplName = presenterImplName;
     }
 
-    public List<String> getView() {
-        return view;
+    public String getModelInterfaceName() {
+        return modelInterfaceName;
     }
 
-    public void setView(List<String> view) {
-        this.view = view;
+    public void setModelInterfaceName(String modelInterfaceName) {
+        this.modelInterfaceName = modelInterfaceName;
     }
 
-    public List<String> getPresenter() {
-        return presenter;
+    public String getModelImplName() {
+        return modelImplName;
     }
 
-    public void setPresenter(List<String> presenter) {
-        this.presenter = presenter;
+    public void setModelImplName(String modelImplName) {
+        this.modelImplName = modelImplName;
     }
 
-    public List<String> getModel() {
-        return model;
+    public boolean isCreateViewInterface() {
+        return createViewInterface;
     }
 
-    public void setModel(List<String> model) {
-        this.model = model;
+    public void setCreateViewInterface(boolean createViewInterface) {
+        this.createViewInterface = createViewInterface;
     }
 
-    public String getViewParent() {
-        return viewParent;
+    public boolean isCreatePresenterInterface() {
+        return createPresenterInterface;
     }
 
-    public void setViewParent(String viewParent) {
-        this.viewParent = viewParent;
+    public void setCreatePresenterInterface(boolean createPresenterInterface) {
+        this.createPresenterInterface = createPresenterInterface;
     }
 
-    public String getPresenterParent() {
-        return presenterParent;
+    public boolean isCreatePresenterImpl() {
+        return createPresenterImpl;
     }
 
-    public void setPresenterParent(String presenterParent) {
-        this.presenterParent = presenterParent;
+    public void setCreatePresenterImpl(boolean createPresenterImpl) {
+        this.createPresenterImpl = createPresenterImpl;
     }
 
-    public String getModelParent() {
-        return modelParent;
+    public boolean isCreateModelInterface() {
+        return createModelInterface;
     }
 
-    public void setModelParent(String modelParent) {
-        this.modelParent = modelParent;
+    public void setCreateModelInterface(boolean createModelInterface) {
+        this.createModelInterface = createModelInterface;
+    }
+
+    public boolean isCreateModelImpl() {
+        return createModelImpl;
+    }
+
+    public void setCreateModelImpl(boolean createModelImpl) {
+        this.createModelImpl = createModelImpl;
     }
 }

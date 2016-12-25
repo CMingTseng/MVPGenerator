@@ -1,8 +1,13 @@
 package com.lany.plugin.dialog;
 
-import com.intellij.openapi.ui.Messages;
+import com.lany.plugin.model.EditEntity;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import java.awt.*;
 import java.awt.event.*;
 
 public class FunctionDialog extends JDialog implements ItemListener {
@@ -17,20 +22,63 @@ public class FunctionDialog extends JDialog implements ItemListener {
     private JCheckBox createModelImplClassCheckBox;
     private JLabel errorHintLabel;
 
+    private JTextField modelImplEdit;
+    private JTextField modelInterfaceEdit;
+    private JTextField viewInterfaceEdit;
+    private JTextField presenterImplEdit;
+    private JTextField presenterInterfaceEdit;
+
     private OnFunctionDialogListener mListener;
+    private EditEntity editEntity;
 
     public FunctionDialog() {
         setContentPane(contentPane);
         setModal(true);
+        setMinimumSize(new Dimension(500, 500));
         getRootPane().setDefaultButton(createBtn);
 
         setLocationRelativeTo(null);//居中显示
+
+        editEntity = new EditEntity();
+
+        //获取与编辑器关联的模型
+        Document doc = inputEdit.getDocument();
+
+        //添加DocumentListener监听器
+        doc.addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                Document doc = e.getDocument();
+                try {
+                    String content= doc.getText(0, doc.getLength()); //返回文本框输入的内容
+                    modelImplEdit.setText(content + "ModelImpl");
+                    modelInterfaceEdit.setText(content + "Model");
+                    viewInterfaceEdit.setText(content + "View");
+                    presenterImplEdit.setText(content + "PresenterImpl");
+                    presenterInterfaceEdit.setText(content + "Presenter");
+                } catch (BadLocationException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
 
         inputEdit.addInputMethodListener(new InputMethodListener() {
             @Override
             public void inputMethodTextChanged(InputMethodEvent event) {
                 String inputContent = event.getText().toString().trim();
                 if (!inputContent.equals("")) {
+                    editEntity.setName(inputContent);
                     errorHintLabel.setText("");
                 } else {
                     errorHintLabel.setText("content is empty");
@@ -84,7 +132,7 @@ public class FunctionDialog extends JDialog implements ItemListener {
         if (!name.equals("")) {
 
             if (null != mListener) {
-                mListener.onCreateBtnClicked();
+                mListener.onCreateBtnClicked(editEntity);
             }
 
             dispose();
@@ -111,42 +159,28 @@ public class FunctionDialog extends JDialog implements ItemListener {
     public void itemStateChanged(ItemEvent event) {
         //获取改变的复选按键
         Object source = event.getItemSelectable();
+        boolean isSelected = event.getStateChange() == ItemEvent.SELECTED;
         if (source == createPresenterClassCheckBox) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                System.out.println("createPresenterClassCheckBox:" + true);
-            } else {
-                System.out.println("createPresenterClassCheckBox:" + false);
-            }
+            editEntity.setCreatePresenterInterface(isSelected);
+            System.out.println("createPresenterClassCheckBox:" + isSelected);
         } else if (source == createPresenterImplClassCheckBox) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                System.out.println("createPresenterImplClassCheckBox:" + true);
-            } else {
-                System.out.println("createPresenterImplClassCheckBox:" + false);
-            }
+            editEntity.setCreatePresenterImpl(isSelected);
+            System.out.println("createPresenterImplClassCheckBox:" + isSelected);
         } else if (source == createViewInterfaceCheckBox) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                System.out.println("createViewInterfaceCheckBox:" + true);
-            } else {
-                System.out.println("createViewInterfaceCheckBox:" + false);
-            }
+            editEntity.setCreateViewInterface(isSelected);
+            System.out.println("createViewInterfaceCheckBox:" + isSelected);
         } else if (source == createModelClassCheckBox) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                System.out.println("createModelClassCheckBox:" + true);
-            } else {
-                System.out.println("createModelClassCheckBox:" + false);
-            }
+            editEntity.setCreateModelInterface(isSelected);
+            System.out.println("createModelClassCheckBox:" + isSelected);
         } else if (source == createModelImplClassCheckBox) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                System.out.println("createModelImplClassCheckBox:" + true);
-            } else {
-                System.out.println("createModelImplClassCheckBox:" + false);
-            }
+            editEntity.setCreateModelImpl(isSelected);
+            System.out.println("createModelImplClassCheckBox:" + isSelected);
         }
 
     }
 
     public interface OnFunctionDialogListener {
-        void onCreateBtnClicked();
+        void onCreateBtnClicked(EditEntity editEntity);
 
         void onCancelBtnClicked();
     }
