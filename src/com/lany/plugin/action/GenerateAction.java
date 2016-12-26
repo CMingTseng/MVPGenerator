@@ -15,7 +15,7 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.impl.file.PsiDirectoryFactory;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.lany.plugin.dialog.FunctionDialog;
-import com.lany.plugin.model.EditEntity;
+import com.lany.plugin.model.EditInfo;
 import com.lany.plugin.utils.ClassGenerator;
 import com.lany.plugin.model.ClassModel;
 import com.lany.plugin.Constants;
@@ -61,7 +61,7 @@ public class GenerateAction extends AnAction {
         dialog.setOnFunctionDialogListener(new FunctionDialog.OnFunctionDialogListener() {
 
             @Override
-            public void onCreateBtnClicked(EditEntity editEntity) {
+            public void onCreateBtnClicked(EditInfo editEntity) {
                 getClassModel();
                 createFiles();
 

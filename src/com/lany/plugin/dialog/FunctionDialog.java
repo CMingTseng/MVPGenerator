@@ -1,6 +1,6 @@
 package com.lany.plugin.dialog;
 
-import com.lany.plugin.model.EditEntity;
+import com.lany.plugin.model.EditInfo;
 import org.apache.http.util.TextUtils;
 
 import javax.swing.*;
@@ -32,7 +32,7 @@ public class FunctionDialog extends JDialog implements ItemListener {
     private JTextField createContractClassEdit;
 
     private OnFunctionDialogListener mListener;
-    private EditEntity editEntity;
+    private EditInfo mEditInfo;
 
     public FunctionDialog() {
         setTitle("Edit content");
@@ -43,7 +43,7 @@ public class FunctionDialog extends JDialog implements ItemListener {
 
         setLocationRelativeTo(null);//居中显示
 
-        editEntity = new EditEntity();
+        mEditInfo = new EditInfo();
 
         //获取与编辑器关联的模型
         Document doc = inputEdit.getDocument();
@@ -149,27 +149,27 @@ public class FunctionDialog extends JDialog implements ItemListener {
         System.out.println("name:" + name);
         if (!name.equals("")) {
             String modelImplName = modelImplEdit.getText().toString().trim();
-            editEntity.setModelImplName(modelImplName);
+            mEditInfo.setModelImplName(modelImplName);
 
             String contractName = createContractClassEdit.getText().toString().trim();
-            editEntity.setContractName(contractName);
+            mEditInfo.setContractName(contractName);
 
             String modelInterfaceName = modelInterfaceEdit.getText().toString().trim();
-            editEntity.setModelInterfaceName(modelInterfaceName);
+            mEditInfo.setModelInterfaceName(modelInterfaceName);
 
             String viewInterfaceName = viewInterfaceEdit.getText().toString().trim();
-            editEntity.setViewInterfaceName(viewInterfaceName);
+            mEditInfo.setViewInterfaceName(viewInterfaceName);
 
             String presenterImplName = presenterImplEdit.getText().toString().trim();
-            editEntity.setPresenterImplName(presenterImplName);
+            mEditInfo.setPresenterImplName(presenterImplName);
 
             String presenterInterfaceName = presenterInterfaceEdit.getText().toString().trim();
-            editEntity.setPresenterInterfaceName(presenterInterfaceName);
+            mEditInfo.setPresenterInterfaceName(presenterInterfaceName);
 
-            editEntity.setName(name);
-            System.out.println("editEntity:" + editEntity.toString());
+            mEditInfo.setName(name);
+            System.out.println("EditInfo:" + mEditInfo.toString());
             if (null != mListener) {
-                mListener.onCreateBtnClicked(editEntity);
+                mListener.onCreateBtnClicked(mEditInfo);
             }
 
             dispose();
@@ -198,27 +198,27 @@ public class FunctionDialog extends JDialog implements ItemListener {
         Object source = event.getItemSelectable();
         boolean isSelected = event.getStateChange() == ItemEvent.SELECTED;
         if (source == createPresenterClassCheckBox) {
-            editEntity.setCreatePresenterInterface(isSelected);
+            mEditInfo.setCreatePresenterInterface(isSelected);
             System.out.println("createPresenterClassCheckBox:" + isSelected);
             presenterInterfaceEdit.setVisible(isSelected);
         } else if (source == createPresenterImplClassCheckBox) {
-            editEntity.setCreatePresenterImpl(isSelected);
+            mEditInfo.setCreatePresenterImpl(isSelected);
             System.out.println("createPresenterImplClassCheckBox:" + isSelected);
             presenterImplEdit.setVisible(isSelected);
         } else if (source == createViewInterfaceCheckBox) {
-            editEntity.setCreateViewInterface(isSelected);
+            mEditInfo.setCreateViewInterface(isSelected);
             System.out.println("createViewInterfaceCheckBox:" + isSelected);
             viewInterfaceEdit.setVisible(isSelected);
         } else if (source == createModelClassCheckBox) {
-            editEntity.setCreateModelInterface(isSelected);
+            mEditInfo.setCreateModelInterface(isSelected);
             System.out.println("createModelClassCheckBox:" + isSelected);
             modelInterfaceEdit.setVisible(isSelected);
         } else if (source == createModelImplClassCheckBox) {
-            editEntity.setCreateModelImpl(isSelected);
+            mEditInfo.setCreateModelImpl(isSelected);
             System.out.println("createModelImplClassCheckBox:" + isSelected);
             modelImplEdit.setVisible(isSelected);
         } else if (source == createContractClassCheckBox) {
-            editEntity.setCreateContract(isSelected);
+            mEditInfo.setCreateContract(isSelected);
             System.out.println("createContractClassCheckBox:" + isSelected);
             createContractClassEdit.setVisible(isSelected);
         }
@@ -226,7 +226,7 @@ public class FunctionDialog extends JDialog implements ItemListener {
     }
 
     public interface OnFunctionDialogListener {
-        void onCreateBtnClicked(EditEntity editEntity);
+        void onCreateBtnClicked(EditInfo editInfo);
 
         void onCancelBtnClicked();
     }

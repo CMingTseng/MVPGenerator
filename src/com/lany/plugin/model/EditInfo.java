@@ -1,6 +1,6 @@
 package com.lany.plugin.model;
 
-public class EditEntity {
+public class EditInfo {
     private String name;
     private String viewInterfaceName;
     private String presenterInterfaceName;
