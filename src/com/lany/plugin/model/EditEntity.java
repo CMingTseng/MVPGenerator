@@ -4,16 +4,34 @@ public class EditEntity {
     private String name;
     private String viewInterfaceName;
     private String presenterInterfaceName;
+    private String contractName;
     private String presenterImplName;
 
     private String modelInterfaceName;
     private String modelImplName;
 
+    private boolean createContract = true;
     private boolean createViewInterface = true;
     private boolean createPresenterInterface = true;
     private boolean createPresenterImpl = true;
     private boolean createModelInterface = true;
     private boolean createModelImpl = true;
+
+    public String getContractName() {
+        return contractName;
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+
+    public boolean isCreateContract() {
+        return createContract;
+    }
+
+    public void setCreateContract(boolean createContract) {
+        this.createContract = createContract;
+    }
 
     public String getName() {
         return name;
@@ -109,9 +127,11 @@ public class EditEntity {
                 "name='" + name + '\'' +
                 ", viewInterfaceName='" + viewInterfaceName + '\'' +
                 ", presenterInterfaceName='" + presenterInterfaceName + '\'' +
+                ", contractName='" + contractName + '\'' +
                 ", presenterImplName='" + presenterImplName + '\'' +
                 ", modelInterfaceName='" + modelInterfaceName + '\'' +
                 ", modelImplName='" + modelImplName + '\'' +
+                ", createContract=" + createContract +
                 ", createViewInterface=" + createViewInterface +
                 ", createPresenterInterface=" + createPresenterInterface +
                 ", createPresenterImpl=" + createPresenterImpl +

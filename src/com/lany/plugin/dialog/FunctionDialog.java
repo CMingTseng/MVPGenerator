@@ -28,6 +28,8 @@ public class FunctionDialog extends JDialog implements ItemListener {
     private JTextField viewInterfaceEdit;
     private JTextField presenterImplEdit;
     private JTextField presenterInterfaceEdit;
+    private JCheckBox createContractClassCheckBox;
+    private JTextField createContractClassEdit;
 
     private OnFunctionDialogListener mListener;
     private EditEntity editEntity;
@@ -96,6 +98,7 @@ public class FunctionDialog extends JDialog implements ItemListener {
             }
         });
 
+        createContractClassCheckBox.addItemListener(this);
         createPresenterClassCheckBox.addItemListener(this);
         createPresenterImplClassCheckBox.addItemListener(this);
         createViewInterfaceCheckBox.addItemListener(this);
@@ -118,21 +121,23 @@ public class FunctionDialog extends JDialog implements ItemListener {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void autoInput(Document doc){
+    private void autoInput(Document doc) {
         try {
             String content = doc.getText(0, doc.getLength()); //返回文本框输入的内容
-            if(TextUtils.isEmpty(content)){
+            if (TextUtils.isEmpty(content)) {
                 modelImplEdit.setText("");
                 modelInterfaceEdit.setText("");
                 viewInterfaceEdit.setText("");
                 presenterImplEdit.setText("");
                 presenterInterfaceEdit.setText("");
-            }else {
+                createContractClassEdit.setText("");
+            } else {
                 modelImplEdit.setText(content + "ModelImpl");
                 modelInterfaceEdit.setText(content + "Model");
                 viewInterfaceEdit.setText(content + "View");
                 presenterImplEdit.setText(content + "PresenterImpl");
                 presenterInterfaceEdit.setText(content + "Presenter");
+                createContractClassEdit.setText(content + "Contract");
             }
         } catch (BadLocationException e1) {
             e1.printStackTrace();
@@ -145,6 +150,9 @@ public class FunctionDialog extends JDialog implements ItemListener {
         if (!name.equals("")) {
             String modelImplName = modelImplEdit.getText().toString().trim();
             editEntity.setModelImplName(modelImplName);
+
+            String contractName = createContractClassEdit.getText().toString().trim();
+            editEntity.setContractName(contractName);
 
             String modelInterfaceName = modelInterfaceEdit.getText().toString().trim();
             editEntity.setModelInterfaceName(modelInterfaceName);
@@ -209,6 +217,10 @@ public class FunctionDialog extends JDialog implements ItemListener {
             editEntity.setCreateModelImpl(isSelected);
             System.out.println("createModelImplClassCheckBox:" + isSelected);
             modelImplEdit.setVisible(isSelected);
+        } else if (source == createContractClassCheckBox) {
+            editEntity.setCreateContract(isSelected);
+            System.out.println("createContractClassCheckBox:" + isSelected);
+            createContractClassEdit.setVisible(isSelected);
         }
 
     }
