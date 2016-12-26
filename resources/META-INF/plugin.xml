@@ -29,6 +29,10 @@
             <keyboard-shortcut keymap="$default" first-keystroke="meta 1"/>
         </action>
 
+        <action id="MVPCoder" class="com.lany.plugin.action.CodeAction" text="CodeAction" description="CodeAction">
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt N"/>
+        </action>
     </actions>
 
 </idea-plugin>

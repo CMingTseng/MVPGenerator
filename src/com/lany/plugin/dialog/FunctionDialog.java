@@ -1,5 +1,15 @@
 package com.lany.plugin.dialog;
 
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.project.Project;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElementFactory;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.impl.file.PsiDirectoryFactory;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.lany.plugin.model.EditInfo;
 import org.apache.http.util.TextUtils;
 
@@ -35,6 +45,10 @@ public class FunctionDialog extends JDialog implements ItemListener {
     private EditInfo mEditInfo;
 
     public FunctionDialog() {
+        mEditInfo = new EditInfo();
+
+
+        //---------------------------------------------------------------------
         setTitle("Edit content");
         setContentPane(contentPane);
         setModal(true);
@@ -43,7 +57,6 @@ public class FunctionDialog extends JDialog implements ItemListener {
 
         setLocationRelativeTo(null);//居中显示
 
-        mEditInfo = new EditInfo();
 
         //获取与编辑器关联的模型
         Document doc = inputEdit.getDocument();
@@ -119,6 +132,42 @@ public class FunctionDialog extends JDialog implements ItemListener {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
+    public void initData(AnActionEvent event,PsiJavaFile javaFile) {
+        System.out.println("当前包名:" + javaFile.getPackageName());//com.lany.presenter
+        System.out.println("当前类名:" + javaFile.getName());//LoginPresenter.java
+        System.out.println("当前类继承的列表:" + javaFile.getImportList().getText());
+        System.out.println("当前文件类型:" + javaFile.getFileType());
+        System.out.println("当前类父类名称:" + javaFile.getParent().getName());
+        System.out.println("当前类内容:" + javaFile.getText());
+
+        mEditInfo.setCurrentPsiDirectory(javaFile.getContainingDirectory());
+
+        String currentJavaFileName = javaFile.getName();
+        currentJavaFileName = currentJavaFileName.replace(".java", "");
+        if (currentJavaFileName.contains("Presenter")) {
+            currentJavaFileName = currentJavaFileName.replace("Presenter", "");
+        }
+        if (currentJavaFileName.contains("Contract")) {
+            currentJavaFileName = currentJavaFileName.replace("Contract", "");
+        }
+        inputEdit.setText(currentJavaFileName);
+    }
+
+
+    public void initData(AnActionEvent event,PsiDirectory psiDirectory) {
+        Project project = event.getProject();
+        PsiDirectory moduleDir = PsiDirectoryFactory.getInstance(project).createDirectory(event.getData(PlatformDataKeys.VIRTUAL_FILE));
+        System.out.println("当前目录名称:" + moduleDir.getName());
+        GlobalSearchScope searchScope = GlobalSearchScope.allScope(project);
+        System.out.println("搜索范围:" + searchScope.getDisplayName());
+        PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
+        System.out.println("factory:" + factory.toString());
+    }
+
+    private void refreshProject(AnActionEvent e) {
+        e.getProject().getBaseDir().refresh(false, true);
     }
 
     private void autoInput(Document doc) {

@@ -1,5 +1,7 @@
 package com.lany.plugin.model;
 
+import com.intellij.psi.PsiDirectory;
+
 public class EditInfo {
     private String name;
     private String viewInterfaceName;
@@ -16,6 +18,17 @@ public class EditInfo {
     private boolean createPresenterImpl = true;
     private boolean createModelInterface = true;
     private boolean createModelImpl = true;
+
+
+    private PsiDirectory currentPsiDirectory;
+
+    public PsiDirectory getCurrentPsiDirectory() {
+        return currentPsiDirectory;
+    }
+
+    public void setCurrentPsiDirectory(PsiDirectory currentPsiDirectory) {
+        this.currentPsiDirectory = currentPsiDirectory;
+    }
 
     public String getContractName() {
         return contractName;
