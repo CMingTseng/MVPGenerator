@@ -1,6 +1,7 @@
 package com.lany.plugin.dialog;
 
 import com.lany.plugin.model.EditEntity;
+import org.apache.http.util.TextUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -32,6 +33,7 @@ public class FunctionDialog extends JDialog implements ItemListener {
     private EditEntity editEntity;
 
     public FunctionDialog() {
+        setTitle("Edit content");
         setContentPane(contentPane);
         setModal(true);
         setMinimumSize(new Dimension(500, 500));
@@ -119,11 +121,19 @@ public class FunctionDialog extends JDialog implements ItemListener {
     private void autoInput(Document doc){
         try {
             String content = doc.getText(0, doc.getLength()); //返回文本框输入的内容
-            modelImplEdit.setText(content + "ModelImpl");
-            modelInterfaceEdit.setText(content + "Model");
-            viewInterfaceEdit.setText(content + "View");
-            presenterImplEdit.setText(content + "PresenterImpl");
-            presenterInterfaceEdit.setText(content + "Presenter");
+            if(TextUtils.isEmpty(content)){
+                modelImplEdit.setText("");
+                modelInterfaceEdit.setText("");
+                viewInterfaceEdit.setText("");
+                presenterImplEdit.setText("");
+                presenterInterfaceEdit.setText("");
+            }else {
+                modelImplEdit.setText(content + "ModelImpl");
+                modelInterfaceEdit.setText(content + "Model");
+                viewInterfaceEdit.setText(content + "View");
+                presenterImplEdit.setText(content + "PresenterImpl");
+                presenterInterfaceEdit.setText(content + "Presenter");
+            }
         } catch (BadLocationException e1) {
             e1.printStackTrace();
         }
